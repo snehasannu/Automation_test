@@ -1,0 +1,28 @@
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
+import org.junit.Assert;
+
+public class MarsRoverSteps {
+    private MarsRover marsRover;
+    private Position currentPosition;
+
+    @Given("the Mars Rover is initialized on a {int}x{int} grid at position \\(({int}), ({int})\\) facing (North|East|South|West)")
+    public void initializeMarsRover(int gridWidth, int gridHeight, int x, int y, String direction) {
+        Grid grid = new Grid(gridWidth, gridHeight);
+        currentPosition = new Position(x, y, Direction.valueOf(direction));
+        marsRover = new MarsRover(grid, currentPosition);
+    }
+
+    @When("the Mars Rover receives the command sequence \"([^\"]*)\"")
+    public void executeCommandSequence(String commandSequence) {
+        marsRover.executeCommands(commandSequence);
+    }
+
+    @Then("the Mars Rover should be at position \\(({int}), ({int})\\) facing (North|East|South|West)")
+    public void verifyFinalPosition(int x, int y, String direction) {
+        Position expectedPosition = new Position(x, y, Direction.valueOf(direction));
+        Position actualPosition = marsRover.getCurrentPosition();
+        Assert.assertEquals(expectedPosition, actualPosition);
+    }
+}
