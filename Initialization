@@ -1,0 +1,11 @@
+Given("the Mars Rover is ready for deployment", () -> {
+    // Set up the necessary objects and resources for testing
+});
+
+When("the Mars Rover is initialized at position \\((\\d+), (\\d+)\\) facing (North|East|South|West)", (int x, int y, String direction) -> {
+    // Initialize the Mars Rover with the given position and direction
+});
+
+Then("the current position should be \\((\\d+), (\\d+)\\) and the direction should be (North|East|South|West)", (int x, int y, String direction) -> {
+    // Assert that the Mars Rover's current position and direction match the expected values
+});
