@@ -1,11 +1,28 @@
-Given("the Mars Rover is ready for deployment", () -> {
-    // Set up the necessary objects and resources for testing
-});
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
+import org.junit.Assert;
 
-When("the Mars Rover is initialized at position \\((\\d+), (\\d+)\\) facing (North|East|South|West)", (int x, int y, String direction) -> {
-    // Initialize the Mars Rover with the given position and direction
-});
+public class MarsRoverMovementSteps {
+    private MarsRover marsRover;
+    private Position initialPosition;
+    private Position currentPosition;
 
-Then("the current position should be \\((\\d+), (\\d+)\\) and the direction should be (North|East|South|West)", (int x, int y, String direction) -> {
-    // Assert that the Mars Rover's current position and direction match the expected values
-});
+    @Given("a Mars Rover is initialized at position \\(({int}), ({int})\\) facing (North|East|South|West)")
+    public void initializeMarsRover(int x, int y, String direction) {
+        initialPosition = new Position(x, y, Direction.valueOf(direction));
+        marsRover = new MarsRover(initialPosition);
+    }
+
+    @When("the Mars Rover moves forward")
+    public void moveRoverForward() {
+        marsRover.moveForward();
+        currentPosition = marsRover.getCurrentPosition();
+    }
+
+    @Then("the current position should be \\(({int}), ({int})\\) and the direction should be (North|East|South|West)")
+    public void verifyUpdatedPositionAndDirection(int x, int y, String direction) {
+        Position expectedPosition = new Position(x, y, Direction.valueOf(direction));
+        Assert.assertEquals(expectedPosition, currentPosition);
+    }
+}
